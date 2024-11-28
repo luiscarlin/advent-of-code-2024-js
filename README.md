@@ -1,9 +1,16 @@
-## Advent Of Code 2024 JS
+# Advent Of Code 2024 JS
 
-## How to Run
+My solutions to [advent-of-code-2024](https://adventofcode.com/2024) in JavaScript
+
+## How to run
 
 ```bash
+# use correct node version
 nvm use
 
-node test.js
-````
+# start a new day
+./start day01
+
+# run the script
+node ./day01/day01.mjs
+```
