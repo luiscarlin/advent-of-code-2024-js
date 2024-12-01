@@ -30,9 +30,34 @@ function part1() {
 }
 
 function part2() {
-  const data = fs.readFileSync('./day01/file.in', 'utf8');
+  let left = [];
+  let right = [];
+
+  const data = fs
+    .readFileSync('./day01/file.in', 'utf8')
+    .split('\n')
+    .filter(Boolean);
+
+  data.forEach((line, index) => {
+    const [l, r] = line.split('  ');
+
+    left.push(Number(l));
+    right.push(Number(r));
+  });
+
+  left = left.sort();
+  right = right.sort();
   // start here
-  console.log('part 2', 'not yet implemented');
+
+  let similarityScore = 0;
+
+  for (let i = 0; i < left.length; i++) {
+    const times = right.filter((r) => r === left[i]).length;
+
+    similarityScore += left[i] * times;
+  }
+
+  console.log('part 2', similarityScore);
 }
 
 part1();
