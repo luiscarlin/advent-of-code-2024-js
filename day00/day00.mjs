@@ -2,13 +2,13 @@ import { log } from 'node:console';
 import fs from 'node:fs';
 
 function part1() {
-  const data = fs.readFileSync('./day00/file.in', 'utf8');
+  const lines = fs.readFileSync('./day00/file.in', 'utf8');
   // start here
   log('part 1', 'not yet implemented');
 }
 
 function part2() {
-  const data = fs.readFileSync('./day00/file.in', 'utf8');
+  const lines = fs.readFileSync('./day00/file.in', 'utf8');
   // start here
   log('part 2', 'not yet implemented');
 }
