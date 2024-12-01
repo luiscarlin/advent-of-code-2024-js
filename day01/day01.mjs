@@ -26,7 +26,7 @@ function part1() {
     diff.push(Math.abs(left[i] - right[i]));
   }
 
-  console.log('part 1', add(...diff));
+  log('part 1', add(...diff));
 }
 
 function part2() {
