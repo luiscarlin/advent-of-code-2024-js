@@ -1,53 +1,46 @@
 import { add } from 'mathjs';
+import { log } from 'node:console';
 import fs from 'node:fs';
 
 function part1() {
-  let left = [];
-  let right = [];
-
   const data = fs
     .readFileSync('./day01/file.in', 'utf8')
     .split('\n')
     .filter(Boolean);
 
-  data.forEach((line, index) => {
-    const [l, r] = line.split('  ');
+  const [left, right] = data.reduce(
+    (acc, line) => {
+      const [l, r] = line.split('  ').map(Number);
+      acc[0].push(l);
+      acc[1].push(r);
+      return acc;
+    },
+    [[], []],
+  );
 
-    left.push(Number(l));
-    right.push(Number(r));
-  });
+  const sortedLeft = left.sort((a, b) => a - b);
+  const sortedRight = right.sort((a, b) => a - b);
 
-  left = left.sort();
-  right = right.sort();
-
-  const diff = [];
-
-  for (let i = 0; i < left.length; i++) {
-    diff.push(Math.abs(left[i] - right[i]));
-  }
+  const diff = sortedLeft.map((l, i) => Math.abs(l - sortedRight[i]));
 
   log('part 1', add(...diff));
 }
 
 function part2() {
-  let left = [];
-  let right = [];
-
   const data = fs
     .readFileSync('./day01/file.in', 'utf8')
     .split('\n')
     .filter(Boolean);
 
-  data.forEach((line, index) => {
-    const [l, r] = line.split('  ');
-
-    left.push(Number(l));
-    right.push(Number(r));
-  });
-
-  left = left.sort();
-  right = right.sort();
-  // start here
+  const [left, right] = data.reduce(
+    (acc, line) => {
+      const [l, r] = line.split('  ').map(Number);
+      acc[0].push(l);
+      acc[1].push(r);
+      return acc;
+    },
+    [[], []],
+  );
 
   let similarityScore = 0;
 
@@ -57,7 +50,7 @@ function part2() {
     similarityScore += left[i] * times;
   }
 
-  console.log('part 2', similarityScore);
+  log('part 2', similarityScore);
 }
 
 part1();
