@@ -52,25 +52,26 @@ function part2() {
   for (const line of lines) {
     const isSafe = checkLine(line);
 
-    if (isSafe) {
+    if (checkLine(line)) {
       linesSafe++;
-    } else {
-      let currIndex = 0;
-      let currIndexRemoved = 0;
+      continue;
+    }
 
-      while (currIndex < line.length) {
-        const lineCopy = line.slice();
-        lineCopy.splice(currIndexRemoved, 1);
-        const isSafe = checkLine(lineCopy);
+    let currIndex = 0;
+    let currIndexRemoved = 0;
 
-        if (isSafe) {
-          linesSafe++;
-          break;
-        }
+    while (currIndex < line.length) {
+      const lineCopy = line.slice();
+      lineCopy.splice(currIndexRemoved, 1);
+      const isSafe = checkLine(lineCopy);
 
-        currIndex++;
-        currIndexRemoved++;
+      if (isSafe) {
+        linesSafe++;
+        break;
       }
+
+      currIndex++;
+      currIndexRemoved++;
     }
   }
 
