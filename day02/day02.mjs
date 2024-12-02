@@ -1,26 +1,6 @@
 import { log } from 'node:console';
 import fs from 'node:fs';
 
-function part1() {
-  const lines = fs
-    .readFileSync('./day02/file.in', 'utf8')
-    .split('\n')
-    .filter(Boolean)
-    .map((line) => line.split(' ').map(Number));
-
-  let linesSafe = 0;
-
-  for (const line of lines) {
-    const isSafe = checkLine(line);
-
-    if (isSafe) {
-      linesSafe++;
-    }
-  }
-
-  log('part 1', linesSafe);
-}
-
 function checkLine(line) {
   let rowIncreasing;
   let safe = false;
@@ -55,6 +35,26 @@ function checkLine(line) {
   }
 
   return safe;
+}
+
+function part1() {
+  const lines = fs
+    .readFileSync('./day02/file.in', 'utf8')
+    .split('\n')
+    .filter(Boolean)
+    .map((line) => line.split(' ').map(Number));
+
+  let linesSafe = 0;
+
+  for (const line of lines) {
+    const isSafe = checkLine(line);
+
+    if (isSafe) {
+      linesSafe++;
+    }
+  }
+
+  log('part 1', linesSafe);
 }
 
 function part2() {
