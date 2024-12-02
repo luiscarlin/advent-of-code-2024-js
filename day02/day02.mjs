@@ -11,39 +11,50 @@ function part1() {
   let linesSafe = 0;
 
   for (const line of lines) {
-    let rowIncreasing;
+    const isSafe = checkLine(line);
 
-    for (let i = 0; i < line.length; i++) {
-      if (i === 0) {
-        continue;
-      }
-
-      const prev = line[i - 1];
-      const curr = line[i];
-
-      const diff = curr - prev;
-
-      if (Math.abs(diff) > 3 || diff === 0) {
-        break;
-      }
-
-      const increasing = diff > 0;
-
-      if (i === 1) {
-        rowIncreasing = increasing;
-      }
-
-      if (rowIncreasing !== increasing) {
-        break;
-      }
-
-      if (i === line.length - 1) {
-        linesSafe++;
-      }
+    if (isSafe) {
+      linesSafe++;
     }
   }
 
   log('part 1', linesSafe);
+}
+
+function checkLine(line) {
+  let rowIncreasing;
+  let safe = false;
+
+  for (let i = 0; i < line.length; i++) {
+    if (i === 0) {
+      continue;
+    }
+
+    const prev = line[i - 1];
+    const curr = line[i];
+
+    const diff = curr - prev;
+
+    if (Math.abs(diff) > 3 || diff === 0) {
+      break;
+    }
+
+    const increasing = diff > 0;
+
+    if (i === 1) {
+      rowIncreasing = increasing;
+    }
+
+    if (rowIncreasing !== increasing) {
+      break;
+    }
+
+    if (i === line.length - 1) {
+      safe = true;
+    }
+  }
+
+  return safe;
 }
 
 function part2() {
