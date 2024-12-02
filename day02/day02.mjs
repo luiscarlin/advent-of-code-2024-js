@@ -32,15 +32,10 @@ function part1() {
     .filter(Boolean)
     .map((line) => line.split(' ').map(Number));
 
-  let linesSafe = 0;
-
-  for (const line of lines) {
-    const isSafe = checkLine(line);
-
-    if (isSafe) {
-      linesSafe++;
-    }
-  }
+  const linesSafe = lines.reduce(
+    (count, line) => count + (checkLine(line) ? 1 : 0),
+    0,
+  );
 
   log('part 1', linesSafe);
 }
