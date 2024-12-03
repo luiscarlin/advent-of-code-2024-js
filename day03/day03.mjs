@@ -17,8 +17,31 @@ function part1() {
 
 function part2() {
   const lines = fs.readFileSync('./day03/file.in', 'utf8');
-  // start here
-  log('part 2', 'not yet implemented');
+
+  const matches = lines.match(/mul\(\d{1,3},\d{1,3}\)|don't\(\)|do\(\)/g);
+
+  let canMultiple = true;
+  let sum = 0;
+
+  for (const match of matches) {
+    if (match === 'do()' || match === "don't()") {
+      if (match === 'do()') {
+        canMultiple = true;
+      }
+      if (match === "don't()") {
+        canMultiple = false;
+      }
+      continue;
+    }
+
+    if (canMultiple) {
+      const [left, right] = match.match(/\d{1,3}/g).map(Number);
+
+      sum += left * right;
+    }
+  }
+
+  log('part 2', sum);
 }
 
 part1();
