@@ -24,19 +24,12 @@ function part2() {
   let sum = 0;
 
   for (const match of matches) {
-    if (match === 'do()' || match === "don't()") {
-      if (match === 'do()') {
-        canMultiple = true;
-      }
-      if (match === "don't()") {
-        canMultiple = false;
-      }
-      continue;
-    }
-
-    if (canMultiple) {
+    if (match === 'do()') {
+      canMultiple = true;
+    } else if (match === "don't()") {
+      canMultiple = false;
+    } else if (canMultiple) {
       const [left, right] = match.match(/\d{1,3}/g).map(Number);
-
       sum += left * right;
     }
   }
