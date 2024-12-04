@@ -56,10 +56,7 @@ function part1() {
     }
   }
 
-  console.log('found', found);
-
-  // start here
-  log('part 1', 'not yet implemented');
+  log('part 1', found);
 }
 
 function part2() {
