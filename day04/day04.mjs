@@ -17,7 +17,7 @@ function part1() {
       const ha = lines[row][col + 2] ?? '';
       const hs = lines[row][col + 3] ?? '';
 
-      if (hx + hm + ha + hs === 'XMAS' || hx + hm + ha + hs === 'SAMX') {
+      if (['XMAS', 'SAMX'].includes(hx + hm + ha + hs)) {
         found++;
       }
 
@@ -27,7 +27,7 @@ function part1() {
       const va = lines[row + 2]?.[col] ?? '';
       const vs = lines[row + 3]?.[col] ?? '';
 
-      if (vx + vm + va + vs === 'XMAS' || vx + vm + va + vs === 'SAMX') {
+      if (['XMAS', 'SAMX'].includes(vx + vm + va + vs)) {
         found++;
       }
 
@@ -37,7 +37,7 @@ function part1() {
       const da = lines[row + 2]?.[col + 2] ?? '';
       const ds = lines[row + 3]?.[col + 3] ?? '';
 
-      if (dx + dm + da + ds === 'XMAS' || dx + dm + da + ds === 'SAMX') {
+      if (['XMAS', 'SAMX'].includes(dx + dm + da + ds)) {
         found++;
       }
 
@@ -47,10 +47,7 @@ function part1() {
       const dla = lines[row + 2]?.[col - 2] ?? '';
       const dls = lines[row + 3]?.[col - 3] ?? '';
 
-      if (
-        dlx + dlm + dla + dls === 'XMAS' ||
-        dlx + dlm + dla + dls === 'SAMX'
-      ) {
+      if (['XMAS', 'SAMX'].includes(dlx + dlm + dla + dls)) {
         found++;
       }
     }
@@ -60,9 +57,39 @@ function part1() {
 }
 
 function part2() {
-  const lines = fs.readFileSync('./day04/file.in', 'utf8');
-  // start here
-  log('part 2', 'not yet implemented');
+  const lines = fs
+    .readFileSync('./day04/file.in', 'utf8')
+    .split('\n')
+    .filter(Boolean);
+
+  let found = 0;
+
+  for (let row = 0; row < lines.length; row++) {
+    for (let col = 0; col < lines[row].length; col++) {
+      // M.S
+      // .A.
+      // M.S
+
+      // search diagonally (down-right)
+      const dm = lines[row][col];
+      const da = lines[row + 1]?.[col + 1] ?? '';
+      const ds = lines[row + 2]?.[col + 2] ?? '';
+
+      // search diagonally (down-left)
+      const dlm = lines[row][col + 2];
+      const dla = lines[row + 1]?.[col + 2 - 1] ?? '';
+      const dls = lines[row + 2]?.[col + 2 - 2] ?? '';
+
+      if (
+        ['MAS', 'SAM'].includes(dm + da + ds) &&
+        ['MAS', 'SAM'].includes(dlm + dla + dls)
+      ) {
+        found++;
+      }
+    }
+  }
+
+  log('part 2', found);
 }
 
 part1();
