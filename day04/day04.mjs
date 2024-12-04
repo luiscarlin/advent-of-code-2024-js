@@ -1,6 +1,14 @@
 import { log } from 'node:console';
 import fs from 'node:fs';
 
+function searchPattern(lines, row, col, rowInc, colInc) {
+  const x = lines[row]?.[col] ?? '';
+  const m = lines[row + rowInc]?.[col + colInc] ?? '';
+  const a = lines[row + 2 * rowInc]?.[col + 2 * colInc] ?? '';
+  const s = lines[row + 3 * rowInc]?.[col + 3 * colInc] ?? '';
+  return ['XMAS', 'SAMX'].includes(x + m + a + s);
+}
+
 function part1() {
   const lines = fs
     .readFileSync('./day04/file.in', 'utf8')
@@ -11,43 +19,12 @@ function part1() {
 
   for (let row = 0; row < lines.length; row++) {
     for (let col = 0; col < lines[row].length; col++) {
-      // search horizontally
-      const hx = lines[row][col];
-      const hm = lines[row][col + 1] ?? '';
-      const ha = lines[row][col + 2] ?? '';
-      const hs = lines[row][col + 3] ?? '';
-
-      if (['XMAS', 'SAMX'].includes(hx + hm + ha + hs)) {
-        found++;
-      }
-
-      // search vertically
-      const vx = lines[row][col];
-      const vm = lines[row + 1]?.[col] ?? '';
-      const va = lines[row + 2]?.[col] ?? '';
-      const vs = lines[row + 3]?.[col] ?? '';
-
-      if (['XMAS', 'SAMX'].includes(vx + vm + va + vs)) {
-        found++;
-      }
-
-      // search diagonally (down-right)
-      const dx = lines[row][col];
-      const dm = lines[row + 1]?.[col + 1] ?? '';
-      const da = lines[row + 2]?.[col + 2] ?? '';
-      const ds = lines[row + 3]?.[col + 3] ?? '';
-
-      if (['XMAS', 'SAMX'].includes(dx + dm + da + ds)) {
-        found++;
-      }
-
-      // search diagonally (down-left)
-      const dlx = lines[row][col];
-      const dlm = lines[row + 1]?.[col - 1] ?? '';
-      const dla = lines[row + 2]?.[col - 2] ?? '';
-      const dls = lines[row + 3]?.[col - 3] ?? '';
-
-      if (['XMAS', 'SAMX'].includes(dlx + dlm + dla + dls)) {
+      if (
+        searchPattern(lines, row, col, 0, 1) || // horizontally
+        searchPattern(lines, row, col, 1, 0) || // vertically
+        searchPattern(lines, row, col, 1, 1) || // diagonally (down-right)
+        searchPattern(lines, row, col, 1, -1) // diagonally (down-left)
+      ) {
         found++;
       }
     }
