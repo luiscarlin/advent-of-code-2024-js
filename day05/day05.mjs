@@ -52,11 +52,4 @@ function isRowValidCheck(row, rules) {
   return isRowValid;
 }
 
-function part2() {
-  const lines = fs.readFileSync('./day05/file.in', 'utf8');
-  // start here
-  log('part 2', 'not yet implemented');
-}
-
 part1();
-part2();
