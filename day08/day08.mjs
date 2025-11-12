@@ -1,5 +1,6 @@
 import { log } from 'node:console';
 import fs from 'node:fs';
+import { gcd } from '../utils.mjs';
 
 function part1() {
   const raw = fs.readFileSync('./day08/file.in', 'utf8').trim().split('\n');
@@ -103,13 +104,11 @@ function part2() {
         const dc = c2 - c1; // "run" (change in x/columns)
 
         // Find GCD to get the smallest step
-        const gcd = (a, b) => (b === 0 ? Math.abs(a) : gcd(b, a % b));
-
         const g = gcd(dr, dc);
         const stepR = dr / g;
         const stepC = dc / g;
 
-        // Walk the line in both directions from r1,c1
+        // Walk the line in both directions from r1,c1 until out of bounds
         // Forward direction
         let r = r1 + stepR;
         let c = c1 + stepC;
@@ -119,6 +118,7 @@ function part2() {
           c += stepC;
         }
 
+        // staring from r1,c1 and going opposite to r2,c2
         // Backward direction
         r = r1 - stepR;
         c = c1 - stepC;
