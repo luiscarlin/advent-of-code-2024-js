@@ -54,9 +54,75 @@ function part1() {
 }
 
 function part2() {
-  const lines = fs.readFileSync('./day08/test.in', 'utf8');
   // start here
-  log('part 2', 'not yet implemented');
+  const raw = fs.readFileSync('./day08/file.in', 'utf8').trim().split('\n');
+
+  // get number of rows and columns
+  const rows = raw.length;
+  const cols = raw[0].length;
+
+  const antennas = new Map();
+
+  // parse through the raw input and store x,y coordinates of each antenna by frequency
+  // (e.g., antennas: Map { 'A' => [ [0,0], [1,3] ], 'B' => [ [2,2], [4,4] ] })
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const cell = raw[row][col];
+      if (cell !== '.') {
+        // if the map does not have this frequency, initialize it with an empty array
+        if (!antennas.has(cell)) {
+          antennas.set(cell, []);
+        }
+        // store the position of the antenna
+        // as [row, col] tuple in the array for this frequency
+        antennas.get(cell).push([row, col]);
+      }
+    }
+  }
+
+  const antinodes = new Set();
+
+  for (const positions of antennas.values()) {
+    for (let i = 0; i < positions.length; i++) {
+      for (let j = i + 1; j < positions.length; j++) {
+        const [r1, c1] = positions[i];
+        const [r2, c2] = positions[j];
+
+        antinodes.add(`${r1},${c1}`);
+        antinodes.add(`${r2},${c2}`);
+
+        // Calculate direction vector
+        const dr = r2 - r1;
+        const dc = c2 - c1;
+
+        // Find GCD to get the smallest step
+        const gcd = (a, b) => (b === 0 ? Math.abs(a) : gcd(b, a % b));
+        const g = gcd(dr, dc);
+        const stepR = dr / g;
+        const stepC = dc / g;
+
+        // Walk the line in both directions from r1,c1
+        // Forward direction
+        let r = r1 + stepR;
+        let c = c1 + stepC;
+        while (r >= 0 && r < rows && c >= 0 && c < cols) {
+          antinodes.add(`${r},${c}`);
+          r += stepR;
+          c += stepC;
+        }
+
+        // Backward direction
+        r = r1 - stepR;
+        c = c1 - stepC;
+        while (r >= 0 && r < rows && c >= 0 && c < cols) {
+          antinodes.add(`${r},${c}`);
+          r -= stepR;
+          c -= stepC;
+        }
+      }
+    }
+  }
+  log('part 2', antinodes.size);
 }
 
 part1();
